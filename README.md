@@ -12,12 +12,5 @@ Assembly Program
 * You will not be able to achieve an A without working on both.
 * The contests will be run in the last 4 weeks of class.
 
-## Contest Ideas:
-1. Gambling Games
-    * Betting and chips for poker.
-    * Choosing which game.
-    * Choose from multiple minigames:
-      * Blackjack
-      * Roulette
-      * Poker
-      * Horse Betting
+## Contest Project Choice:
+### Horse Race Betting
