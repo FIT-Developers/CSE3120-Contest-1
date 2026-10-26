@@ -1,16 +1,29 @@
-# Contest-1
-Assembly Program
+# Contest 1: Across the Board (Horse Race Betting Game)
 
-## Professor Silaghi:
-* Code must be developed in a public GitHub project.
-* Complexity doesn't need to be high.
-* Work on it for at least 3 weeks with multiple GH submissions.
-* Each push needs a detailed explanation of the features/corrections added.
-* Any features added that were not taught in class must include a comment explaining that it wasn't learned in class, and how you learned it.
-* If you don't, you will be accused of using AI generation and will be penalized.
-* Both projects make up at least 10% of your grade.
-* You will not be able to achieve an A without working on both.
-* The contests will be run in the last 4 weeks of class.
+## Project Overview
+This is a 32-bit x86 Assembly implementation of the traditional wooden horse race gambling game **"Across the Board"**, built for CSE3120 Contest 1. 
 
-## Contest Project Choice:
-### Horse Race Betting
+The game supports a single-player experience against 3 simulated AI opponents, featuring:
+- Dice rolling and card dealing
+- Horse movement and position tracking
+- Scratch horse penalties and dynamic chip pot management
+- An ASCII console board interface using the Irvine32 library
+
+## Team Members
+- **Michael Woodyard**
+- **Kelsey Hahn**
+
+## Environment & Prerequisites
+- **Language:** x86 Assembly (MASM / 32-bit)
+- **IDE:** Visual Studio 2022
+- **Required Library:** `Irvine32` (`Irvine32.inc` & `Irvine32.lib`)
+
+## How to Compile and Run
+1. Open Visual Studio 2022 and load the project solution (`.sln`).
+2. Ensure **MASM Build Customizations** (`masm.targets`) are enabled for the project.
+3. Confirm that the **Irvine32** library and include paths are correctly linked in your project properties:
+   - *Include Directories:* `C:\Irvine`
+   - *Library Directories:* `C:\Irvine`
+   - *Additional Dependencies:* `Irvine32.lib`
+4. Build the solution (**Ctrl + Shift + B** or **Build > Build Solution**).
+5. Run the program (**F5** or **Ctrl + F5**).
