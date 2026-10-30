@@ -48,7 +48,35 @@ Roll2Dice PROC
 	mov eax, die1
 	add eax, die2
 	mov diceTotal, eax
-	
+
+
+	; Display the results
+
+	; Load the memory address of die1Msg into EDX and print it
+	mov edx, OFFSET die1Msg
+	; Prints null-terminated string pointed to by EDX
+	call WriteString
+	mov eax, die1
+	; Prints the decimal value in EAX
+	call WriteDec
+	; Prints a new line
+	call Crlf
+
+	; Load the memory address of die2Msg into EDX and print it
+	mov edx, OFFSET die2Msg
+	call WriteString
+	mov eax, die2
+	call WriteDec
+	call Crlf
+
+	; Load the memory address of totalMsg into EDX and print it
+	mov edx, OFFSET totalMsg
+	call WriteString
+	mov eax, diceTotal
+	call WriteDec
+	call Crlf
+
+
 	ret
 Roll2Dice ENDP
 
@@ -67,10 +95,16 @@ ProcessRoll ENDP
 ; Game setup and main loop calling Roll2Dice and ProcessRoll
 main PROC
 
+	; Seed the random number generator
+	call Randomize
+	; Roll the dice and display the results
+	call Roll2Dice
+	; Process the roll and update the board state
+	call ProcessRoll
 
 
 
-	exit
+exit
 main ENDP
 
 END main
