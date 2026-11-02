@@ -88,13 +88,28 @@ Roll2Dice ENDP
 
 ; Process the roll and update the board state
 ProcessRoll PROC
-	
+	; Convert the dice total to a horse index (0-10)
+	mov esi, diceTotal
+	sub esi, 2  ; adjusts for the zero-based index (dice total ranges from 2 to 12)
+
+	; Check if the horse is scratched (1) or active (0)
+	cmp scratchedFlags[esi], 1
+	je horseScratched  ; if scratched, jump to horseScratched
+
+	; If active, increment the horse's position on the track
+	inc horsePositions[esi * 4]
+	jmp Done
 
 
-	
+	; Scratched horse handling
+	horseScratched:
 
 
-	ret
+	; Display a message indicating the horse is scratched
+	Done:
+		
+
+		ret
 ProcessRoll ENDP
 
 
