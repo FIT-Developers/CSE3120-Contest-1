@@ -23,6 +23,11 @@ INCLUDE Irvine32.inc
 	die2Msg BYTE "Second die: ", 0
 	totalMsg BYTE "Total roll: ", 0
 
+	; Board state and track variables
+	horsePositions DWORD 11 DUP(0)  ; array to hold the positions of 11 horses on the track
+	trackLengths DWORD 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3  ; lengths of each horse's track segment
+	scratchedFlags BYTE 11 DUP(0)  ; 0 is active, 1 is scratched
+
 
 ; -----------------------------------------------------------------------
 ; Code: Routines for rolling dice, processing rolls, and main game loop
@@ -83,6 +88,7 @@ Roll2Dice ENDP
 
 ; Process the roll and update the board state
 ProcessRoll PROC
+	
 
 
 	
