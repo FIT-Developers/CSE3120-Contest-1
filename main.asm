@@ -113,6 +113,49 @@ ProcessRoll PROC
 ProcessRoll ENDP
 
 
+; Check if any active horse has reached or exceeded its finish line
+; Returns 1 in EAX if a horse has won, otherwise returns 0
+; ESI is used as the index for the horse being checked (0-10)
+CheckWinConditions PROC
+	; Loop through each horse to check their positions
+	mov esi, 0  ; total number of horses
+
+	; Loop through each horse
+	CheckLoop:
+		cmp esi, 11  ; check if all horses have been checked
+		je NoWinner  ; if all horses checked, no winner
+
+		; Skip scratched horses
+		cmp scratchedFlags[esi], 1
+		je NextHorse  ; if scratched, skip to the next horse
+
+
+		; Compare the horse's position with its track length
+		mov eax, horsePositions[esi * 4]  ; get the horse's current position
+		cmp eax, trackLengths[esi * 4]  ; compare with the track length
+		jge WinnerFound  ; if position >= track length, we have a winner
+
+	
+	; Increments the index to check the next horse
+	NextHorse:
+		inc esi
+		jmp CheckLoop  ; repeat the loop for the next horse
+
+	
+	; Set win flag to true if no winner is found
+	WinnerFound:
+		mov eax, 1  ; set EAX to 1 indicating a winner has been found
+		ret
+
+
+	; If no winner is found, set win flag to false
+	NoWinner:
+		mov eax, 0  ; set EAX to 0 indicating no winner
+		ret
+
+CheckWinConditions ENDP
+
+
 ; Game setup and main loop calling Roll2Dice and ProcessRoll
 main PROC
 
