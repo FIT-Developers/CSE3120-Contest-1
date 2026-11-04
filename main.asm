@@ -22,11 +22,13 @@ INCLUDE Irvine32.inc
 	die1Msg BYTE "First die: ", 0
 	die2Msg BYTE "Second die: ", 0
 	totalMsg BYTE "Total roll: ", 0
+	colonMsg BYTE ": ", 0
 
 	; Board state and track variables
 	horsePositions DWORD 11 DUP(0)  ; array to hold the positions of 11 horses on the track
 	trackLengths DWORD 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3  ; lengths of each horse's track segment
 	scratchedFlags BYTE 11 DUP(0)  ; 0 is active, 1 is scratched
+
 
 
 ; -----------------------------------------------------------------------
@@ -156,20 +158,72 @@ CheckWinConditions PROC
 CheckWinConditions ENDP
 
 
+; Display ASCII game header and current horse peg positions
+DrawBoard PROC
+	; Clears the console screen
+	call Clrscr
+
+	; Display the current dice roll summary
+	mov edx, OFFSET totalMsg
+	call WriteString
+
+	; Display the total dice roll value
+	mov eax, diceTotal
+	call WriteDec
+
+	call Crlf
+	call Crlf
+
+	; Display the horse peg positions header
+	mov esi, 0  ; index for horses, starts at horse 2 (index 0)
+
+; Loop to print each horse's position
+PrintBoardLoop:
+	cmp esi, 11  ; check if all horses have been printed
+	je DonePrinting  ; if all horses printed, exit loop
+
+	; Display the horse number (2-12)
+	mov eax, esi
+	add eax, 2  ; adjust for horse number (2-12)
+
+	call WriteDec
+
+	; Display the separator ": "
+	mov edx, OFFSET colonMsg
+	call WriteString
+
+	; Display the horse's current position on the track
+	mov eax, horsePositions[esi * 4]
+
+	call WriteDec
+	call Crlf
+
+	; Move to the next horse
+	inc esi
+	jmp PrintBoardLoop
+
+; Exit the loop and return from the procedure
+DonePrinting:
+	call Crlf
+	ret
+DrawBoard ENDP
+
 ; Game setup and main loop calling Roll2Dice and ProcessRoll
 main PROC
 
 	; Seed the random number generator
 	call Randomize
+
 	; Roll the dice and display the results
 	call Roll2Dice
+
 	; Process the roll and update the board state
 	call ProcessRoll
 
+	; Render the updated board UI
+	call DrawBoard
 
-
-exit
+	exit
 main ENDP
 
 END main
-
