@@ -28,6 +28,7 @@ INCLUDE Irvine32.inc
 	horsePositions DWORD 11 DUP(0)  ; array to hold the positions of 11 horses on the track
 	trackLengths DWORD 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3  ; lengths of each horse's track segment
 	scratchedFlags BYTE 11 DUP(0)  ; 0 is active, 1 is scratched
+	scratchCount DWORD 0  ; Number of unique scratched horses
 
 
 
@@ -83,10 +84,25 @@ Roll2Dice PROC
 	call WriteDec
 	call Crlf
 
-
 	ret
 Roll2Dice ENDP
 
+; Scratch four different horses before racing.
+InitScratches PROC
+ScratchLoop:
+    cmp scratchCount, 4
+    jae ScratchesReady
+    call Roll2Dice
+    mov esi, diceTotal
+    sub esi, 2
+    cmp scratchedFlags[esi], 1
+    je ScratchLoop
+    mov scratchedFlags[esi], 1
+    inc scratchCount
+    jmp ScratchLoop
+ScratchesReady:
+    ret
+InitScratches ENDP
 
 ; Process the roll and update the board state
 ProcessRoll PROC
@@ -213,6 +229,8 @@ main PROC
 
 	; Seed the random number generator
 	call Randomize
+
+	call InitScratches
 
 	; Roll the dice and display the results
 	call Roll2Dice
