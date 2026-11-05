@@ -29,6 +29,13 @@ INCLUDE Irvine32.inc
 	trackLengths DWORD 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3  ; lengths of each horse's track segment
 	scratchedFlags BYTE 11 DUP(0)  ; 0 is active, 1 is scratched
 
+	; Pot and chip variables
+	potTotal DWORD 20  ; total amount in the pot
+	playerChips DWORD 20, 20, 20, 20  ; each player's available chips
+
+	; Messages for displaying that the game is over
+	gameOverMsg BYTE "--- GAME OVER! Thanks for playing! ---", 0
+
 
 
 ; -----------------------------------------------------------------------
@@ -208,6 +215,48 @@ DonePrinting:
 	ret
 DrawBoard ENDP
 
+; Distribute the pot chips to the winning horse's player
+DistributePot PROC
+
+	; Display the payout header message
+	mov edx, OFFSET payoutMsg
+	call WriteString
+
+	; Load the total pot amount into EAX for distribution
+	mov eax, potTotal
+	call WriteDec
+
+	; Display the chips message
+	mov edx, OFFSET chipsMsg
+	call WriteString
+	call Crlf
+
+	; Default equal split among the 4 active players
+	cmp potTotal, 0
+
+	je PotEmpty ; if pot is empty, skip distribution
+
+	; Calculate the equal share for each player
+	mov eax, potTotal
+	mov ebx, 4  ; number of players
+	cdq ; clear EDX for division
+	idiv ebx ; divide potTotal by 4, result in EAX, remainder in EDX
+
+	; Credit each player's chips with their share
+	add playerChips[0], eax
+	add playerChips[4], eax
+	add playerChips[8], eax
+	add playerChips[12], eax
+
+	; Reset the pot to zero after distribution
+	mov potTotal, 0
+
+	PotEmpty:
+		ret
+
+	DistributePot ENDP
+
+
 ; Game setup and main loop calling Roll2Dice and ProcessRoll
 main PROC
 
@@ -222,6 +271,19 @@ main PROC
 
 	; Render the updated board UI
 	call DrawBoard
+
+	; Evaluate the win conditions to check for a winner
+	call CheckWinConditions
+	cmp eax, 1  ; check if a winner was found
+	jne ContinueGame  ; if no winner, continue the game
+
+	; If a winner is found, distribute the pot to the winning player
+	call DistributePot
+
+	; Display the game over message
+	mov edx, OFFSET gameOverMsg
+	call WriteString
+	call Crlf
 
 	exit
 main ENDP
