@@ -127,11 +127,15 @@ InitScratches PROC
 ScratchLoop:
 	cmp scratchCount, 4
 	jae ScratchesReady
-	call Roll2Dice
-	mov esi, diceTotal
-	sub esi, 2
+
+	; Roll 2 to 12 without triggering the UI dice rolls
+	mov eax, 11 ; 0 to 10
+	call RandomRange ; EAX = 0 to 10
+	mov esi, eax
+	
 	cmp scratchedFlags[esi], 1
 	je ScratchLoop
+
 	mov scratchedFlags[esi], 1
 	inc scratchCount
 	jmp ScratchLoop
@@ -372,22 +376,21 @@ main PROC
 		; Render the updated board UI
 		call DrawBoard
 
+		; Check the win condition immediately after drawing the board
+		call CheckWinConditions
+		cmp eax, 1
+		je Victory
+
 		; Prompt the user to press a key to continue
 		mov edx, OFFSET promptMsg
 		call WriteString
 
 		; Wait for user input to proceed
 		call ReadChar
+		jmp GameLoop
 
-		; Evaluate the win conditions to check for a winner
-		call CheckWinConditions
-		cmp eax, 1  ; check if a winner was found
-		jne GameLoop  ; if no winner, continue the game
-
-		; If a winner is found, distribute the pot to the winning player
+	Victory:
 		call DistributePot
-
-		; Display the game over message
 		mov edx, OFFSET gameOverMsg
 		call WriteString
 		call Crlf
