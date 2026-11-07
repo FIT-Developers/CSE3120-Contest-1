@@ -42,6 +42,11 @@ Beep PROTO dwFreq:DWORD, dwType:DWORD
 	; Pot and payout messages
 	payoutMsg BYTE "Winner! Payout: ", 0
 	chipsMsg  BYTE " chips.", 0
+	horseWinnerMsg BYTE "Horse #", 0
+	wonMsg BYTE " has won the race!", 0Dh, 0Ah, 0
+
+	; Winning horse tracking variable
+	winningHorse DWORD ?
 
 	; UI Display Strings
 	boardHeaderMsg BYTE "=== ACROSS THE BOARD: HORSE RACE ===", 0Dh, 0Ah
@@ -201,6 +206,9 @@ CheckWinConditions PROC
 	
 	; Set win flag to true if no winner is found
 	WinnerFound:
+		mov eax, esi
+		add eax, 2 ; converts the array index to horse number
+		mov winningHorse, eax ; Save the winning horse number
 		mov eax, 1  ; set EAX to 1 indicating a winner has been found
 		ret
 
@@ -314,6 +322,14 @@ DistributePot PROC
 	; Set text color to light green for the payout message
 	mov eax, lightGreen + (black * 16)  ; light green text on black background
 	call SetTextColor
+
+	; Display the winning horse announcement, ie: "Horse #7 has won the race!"
+	mov edx, OFFSET horseWinnerMsg
+	call WriteString
+	mov eax, winningHorse
+	call WriteDec
+	mov edx, OFFSET wonMsg
+	call WriteString
 
 	; Display the payout header message
 	mov edx, OFFSET payoutMsg
