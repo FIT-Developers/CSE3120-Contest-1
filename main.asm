@@ -75,6 +75,9 @@ Roll2Dice PROC
 	add eax, die2
 	mov diceTotal, eax
 
+	; Set the text color to yellow for dice output
+	mov eax, yellow + (black * 16)  ; yellow text on black background
+	call SetTextColor
 
 	; Display the results
 
@@ -101,6 +104,10 @@ Roll2Dice PROC
 	mov eax, diceTotal
 	call WriteDec
 	call Crlf
+
+	; Reset the text color to default light gray / white
+	mov eax, lightGray + (black * 16)  ; light gray text on black background
+	call SetTextColor
 
 	ret
 Roll2Dice ENDP
