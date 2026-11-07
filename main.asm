@@ -241,8 +241,11 @@ PrintBoardLoop:
 
 	; Display the horse's current position on the track
 	mov eax, horsePositions[esi * 4]
-
 	call WriteDec
+
+	; Print " peg(s) advanced" message
+	mov edx, OFFSET trackPegMsg
+	call WriteString
 
 	; Check whether this horse is scratched
 	cmp scratchedFlags[esi], 1
