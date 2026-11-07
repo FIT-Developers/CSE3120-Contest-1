@@ -363,7 +363,7 @@ main PROC
 		; Evaluate the win conditions to check for a winner
 		call CheckWinConditions
 		cmp eax, 1  ; check if a winner was found
-		jne ContinueGame  ; if no winner, continue the game
+		jne GameLoop  ; if no winner, continue the game
 
 		; If a winner is found, distribute the pot to the winning player
 		call DistributePot
