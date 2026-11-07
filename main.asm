@@ -277,6 +277,9 @@ DrawBoard ENDP
 
 ; Distribute the pot chips to the winning horse's player
 DistributePot PROC
+	; Set text color to light green for the payout message
+	mov eax, lightGreen + (black * 16)  ; light green text on black background
+	call SetTextColor
 
 	; Display the payout header message
 	mov edx, OFFSET payoutMsg
@@ -293,7 +296,6 @@ DistributePot PROC
 
 	; Default equal split among the 4 active players
 	cmp potTotal, 0
-
 	je PotEmpty ; if pot is empty, skip distribution
 
 	; Calculate the equal share for each player
@@ -312,6 +314,10 @@ DistributePot PROC
 	mov potTotal, 0
 
 	PotEmpty:
+		; Reset text color to default light gray
+		mov eax, lightGray + (black * 16)
+		call SetTextColor
+
 		ret
 
 	DistributePot ENDP
