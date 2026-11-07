@@ -45,9 +45,6 @@ INCLUDE Irvine32.inc
 	promptMsg      BYTE "Press any key to roll the dice...", 0
 	trackPegMsg    BYTE " peg(s) advanced", 0
 
-	; Sound alert for when a horse wins and the pot is distributed
-	beepChar BYTE 07h, 0
-
 	; Messages for displaying that the game is over
 	gameOverMsg BYTE "--- GAME OVER! Thanks for playing! ---", 0
 
@@ -280,13 +277,13 @@ DrawBoard ENDP
 
 ; Distribute the pot chips to the winning horse's player
 DistributePot PROC
-	; Trigger the console audio alert
-	mov edx, OFFSET beepChar
-	call WriteString
+	; Print a new line after the last prompted keypress
+	call Crlf
 
-	; Pause for 300ms
-	mov eax, 300
-	call Delay
+	; Play a tone at 500 hertz for 300ms
+	mov eax, 500 ; pitch in hertz
+	mov ebx, 300 ; 300ms duration
+	call Beep
 
 	; Set text color to light green for the payout message
 	mov eax, lightGreen + (black * 16)  ; light green text on black background
