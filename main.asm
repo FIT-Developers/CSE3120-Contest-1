@@ -8,6 +8,10 @@
 INCLUDE Irvine32.inc
 
 
+; Win32 API for console audio
+Beep PROTO dwFreq:DWORD, dwType:DWORD
+
+
 ; -----------------------------------------------------------------------
 ; Data: Global variables, arrays, and board status
 ; -----------------------------------------------------------------------
@@ -280,10 +284,12 @@ DistributePot PROC
 	; Print a new line after the last prompted keypress
 	call Crlf
 
-	; Play a tone at 500 hertz for 300ms
-	mov eax, 500 ; pitch in hertz
-	mov ebx, 300 ; 300ms duration
-	call Beep
+	; Play a beep at 750 hertz for 400 ms
+	INVOKE Beep, 750, 400
+
+	; Pause for 300ms
+	mov eax, 300
+	call Delay
 
 	; Set text color to light green for the payout message
 	mov eax, lightGreen + (black * 16)  ; light green text on black background
