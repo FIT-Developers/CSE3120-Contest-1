@@ -35,6 +35,12 @@ INCLUDE Irvine32.inc
 	potTotal DWORD 20  ; total amount in the pot
 	playerChips DWORD 20, 20, 20, 20  ; each player's available chips
 
+	; UI Display Strings
+	boardHeaderMsg BYTE "=== ACROSS THE BOARD: HORSE RACE ===", 0Dh, 0Ah
+	               BYTE "------------------------------------", 0
+	promptMsg      BYTE "Press any key to roll the dice...", 0
+	trackPegMsg    BYTE " peg(s) advanced", 0
+
 	; Messages for displaying that the game is over
 	gameOverMsg BYTE "--- GAME OVER! Thanks for playing! ---", 0
 
