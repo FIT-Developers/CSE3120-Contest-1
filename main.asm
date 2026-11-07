@@ -259,17 +259,37 @@ PrintBoardLoop:
 	mov eax, horsePositions[esi * 4]
 	call WriteDec
 
-	; Print " peg(s) advanced" message
-	mov edx, OFFSET trackPegMsg
-	call WriteString
-
 	; Check whether this horse is scratched
 	cmp scratchedFlags[esi], 1
-	jne NotScratched
+	je PrintScratchedLine
 
-	; Display scratched status
-	mov edx, OFFSET scratchedMsg
+	; Draw the opening bracket: [
+	mov edx, OFFSET openBracket
 	call WriteString
+
+	; Inner loop that draws the track spaces and horse position: [ H ]
+	mov ecx, 0
+	DrawTrackLoop:
+		cmp ecx, trackLengths[esi * 4]
+		je CloseTrackBracked
+
+		cmp ecx, horsePositions[esi * 4]
+		jne PrintTrackSpace
+
+		mov edx, OFFSET horseCharacter
+		call WriteString
+		
+		jmp NextTrackPosition
+
+	PrintTrackSpace:
+		mov edx, OFFSET spaceCharacter
+		call WriteString
+
+	NextTrackPos:
+		inc ecx
+		jmp DrawTrackLoop
+
+
 
 NotScratched:
 	call Crlf
