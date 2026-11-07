@@ -18,36 +18,42 @@ Beep PROTO dwFreq:DWORD, dwType:DWORD
 
 .data
 	;Dice values
-	die1 DWORD ?  ; stores the first dice (1-6)
-	die2 DWORD ?  ; stores the second dice (1-6)
+	die1      DWORD ?  ; stores the first dice (1-6)
+	die2      DWORD ?  ; stores the second dice (1-6)
 	diceTotal DWORD ?  ; stores their sum (2-12)
 
 	; Messages for displaying dice rolls
-	die1Msg BYTE "First die: ", 0
-	die2Msg BYTE "Second die: ", 0
+	die1Msg  BYTE "First die: ", 0
+	die2Msg  BYTE "Second die: ", 0
 	totalMsg BYTE "Total roll: ", 0
 	colonMsg BYTE ": ", 0
 
 	; Board state and track variables
 	horsePositions DWORD 11 DUP(0)  ; array to hold the positions of 11 horses on the track
-	trackLengths DWORD 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3  ; lengths of each horse's track segment
+	trackLengths   DWORD 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3  ; lengths of each horse's track segment
 	scratchedFlags BYTE 11 DUP(0)  ; 0 is active, 1 is scratched
-	scratchCount DWORD 0  ; Number of unique scratched horses
-	scratchedMsg BYTE " (SCRATCHED)", 0
+	scratchCount   DWORD 0  ; Number of unique scratched horses
+	scratchedMsg   BYTE " (SCRATCHED)", 0
 
 	; Pot and chip variables
-	potTotal DWORD 20  ; total amount in the pot
+	potTotal    DWORD 20  ; total amount in the pot
 	playerChips DWORD 20, 20, 20, 20  ; each player's available chips
 
 	; Pot and payout messages
 	payoutMsg BYTE "Winner! Payout: ", 0
-	chipsMsg BYTE " chips.", 0
+	chipsMsg  BYTE " chips.", 0
 
 	; UI Display Strings
 	boardHeaderMsg BYTE "=== ACROSS THE BOARD: HORSE RACE ===", 0Dh, 0Ah
 				   BYTE "------------------------------------", 0
 	promptMsg      BYTE "Press any key to roll the dice...", 0
 	trackPegMsg    BYTE " peg(s) advanced", 0
+
+	; Visual Track Symbols
+	openBracket    BYTE " [", 0
+	closeBracket   BYTE "] ", 0
+	horseCharacter BYTE "H", 0
+	spaceCharacter BYTE " ", 0
 
 	; Messages for displaying that the game is over
 	gameOverMsg BYTE "--- GAME OVER! Thanks for playing! ---", 0
@@ -243,7 +249,6 @@ PrintBoardLoop:
 	; Display the horse number (2-12)
 	mov eax, esi
 	add eax, 2  ; adjust for horse number (2-12)
-
 	call WriteDec
 
 	; Display the separator ": "
