@@ -41,7 +41,7 @@ INCLUDE Irvine32.inc
 
 	; UI Display Strings
 	boardHeaderMsg BYTE "=== ACROSS THE BOARD: HORSE RACE ===", 0Dh, 0Ah
-	               BYTE "------------------------------------", 0
+				   BYTE "------------------------------------", 0
 	promptMsg      BYTE "Press any key to roll the dice...", 0
 	trackPegMsg    BYTE " peg(s) advanced", 0
 
@@ -118,18 +118,18 @@ Roll2Dice ENDP
 ; Scratch four different horses before racing.
 InitScratches PROC
 ScratchLoop:
-    cmp scratchCount, 4
-    jae ScratchesReady
-    call Roll2Dice
-    mov esi, diceTotal
-    sub esi, 2
-    cmp scratchedFlags[esi], 1
-    je ScratchLoop
-    mov scratchedFlags[esi], 1
-    inc scratchCount
-    jmp ScratchLoop
+	cmp scratchCount, 4
+	jae ScratchesReady
+	call Roll2Dice
+	mov esi, diceTotal
+	sub esi, 2
+	cmp scratchedFlags[esi], 1
+	je ScratchLoop
+	mov scratchedFlags[esi], 1
+	inc scratchCount
+	jmp ScratchLoop
 ScratchesReady:
-    ret
+	ret
 InitScratches ENDP
 
 ; Process the roll and update the board state
