@@ -35,6 +35,10 @@ INCLUDE Irvine32.inc
 	potTotal DWORD 20  ; total amount in the pot
 	playerChips DWORD 20, 20, 20, 20  ; each player's available chips
 
+	; Pot and payout messages
+	payoutMsg BYTE "Winner! Payout: ", 0
+	chipsMsg BYTE " chips.", 0
+
 	; UI Display Strings
 	boardHeaderMsg BYTE "=== ACROSS THE BOARD: HORSE RACE ===", 0Dh, 0Ah
 	               BYTE "------------------------------------", 0
@@ -193,9 +197,22 @@ DrawBoard PROC
 	; Clears the console screen
 	call Clrscr
 
+	; Display the game header
+	mov edx, OFFSET boardHeaderMsg
+	call WriteString
+	call Crlf
+	call Crlf
+
 	; Display the current dice roll summary
 	mov edx, OFFSET totalMsg
 	call WriteString
+	mov eax, diceTotal
+	call WriteDec
+	call Crlf
+	call Crlf
+
+	; Display the horse peg positions header
+	mov esi, 0 ; index for horses, starts at horse 2 (index 0)
 
 	; Display the total dice roll value
 	mov eax, diceTotal
