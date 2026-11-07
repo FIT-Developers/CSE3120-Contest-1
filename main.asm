@@ -228,73 +228,64 @@ DrawBoard PROC
 	call Crlf
 	call Crlf
 
-	; Display the horse peg positions header
-	mov esi, 0 ; index for horses, starts at horse 2 (index 0)
+	; Initialize the horse index (0 to 10)
+	mov esi, 0
 
-	; Display the total dice roll value
-	mov eax, diceTotal
-	call WriteDec
-
-	call Crlf
-	call Crlf
-
-	; Display the horse peg positions header
-	mov esi, 0  ; index for horses, starts at horse 2 (index 0)
-
-; Loop to print each horse's position
+; Loop to print each horse's position (0-10, representing horses 2-12)
 PrintBoardLoop:
-	cmp esi, 11  ; check if all horses have been printed
-	je DonePrinting  ; if all horses printed, exit loop
+	cmp esi, 11
+	je DonePrinting
 
-	; Display the horse number (2-12)
+	; Print horse number (2-12)
 	mov eax, esi
-	add eax, 2  ; adjust for horse number (2-12)
+	add eax, 2
 	call WriteDec
 
-	; Display the separator ": "
+	; Print separator ": "
 	mov edx, OFFSET colonMsg
 	call WriteString
 
-	; Display the horse's current position on the track
-	mov eax, horsePositions[esi * 4]
-	call WriteDec
-
-	; Check whether this horse is scratched
+	; Check if scratched
 	cmp scratchedFlags[esi], 1
 	je PrintScratchedLine
 
-	; Draw the opening bracket: [
+	; Print opening bracket: [
 	mov edx, OFFSET openBracket
 	call WriteString
 
-	; Inner loop that draws the track spaces and horse position: [ H ]
+	; Draw track segment
 	mov ecx, 0
-	DrawTrackLoop:
-		cmp ecx, trackLengths[esi * 4]
-		je CloseTrackBracked
 
-		cmp ecx, horsePositions[esi * 4]
-		jne PrintTrackSpace
+DrawTrackLoop:
+	cmp ecx, trackLengths[esi * 4]
+	je FinishTrackLine
 
-		mov edx, OFFSET horseCharacter
-		call WriteString
-		
-		jmp NextTrackPosition
+	cmp ecx, horsePositions[esi * 4]
+	jne DrawBlankSpace
 
-	PrintTrackSpace:
-		mov edx, OFFSET spaceCharacter
-		call WriteString
+	mov edx, OFFSET horseCharacter
+	call WriteString
+	jmp NextChar
 
-	NextTrackPos:
-		inc ecx
-		jmp DrawTrackLoop
+DrawBlankSpace:
+	mov edx, OFFSET spaceCharacter
+	call WriteString
 
+NextChar:
+	inc ecx
+	jmp DrawTrackLoop
 
+FinishTrackLine:
+	mov edx, OFFSET closeBracket
+	call WriteString
+	jmp NextHorseLine
 
-NotScratched:
+PrintScratchedLine:
+	mov edx, OFFSET scratchedMsg
+	call WriteString
+
+NextHorseLine:
 	call Crlf
-
-	; Move to the next horse
 	inc esi
 	jmp PrintBoardLoop
 	
