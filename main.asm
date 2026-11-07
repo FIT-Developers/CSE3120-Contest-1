@@ -316,29 +316,38 @@ main PROC
 	; Seed the random number generator
 	call Randomize
 
+	; Initialize the scratched horses before starting the game
 	call InitScratches
 
-	; Roll the dice and display the results
-	call Roll2Dice
+	GameLoop:
+		; Roll the dice and display the results
+		call Roll2Dice
 
-	; Process the roll and update the board state
-	call ProcessRoll
+		; Process the roll and update the board state
+		call ProcessRoll
 
-	; Render the updated board UI
-	call DrawBoard
+		; Render the updated board UI
+		call DrawBoard
 
-	; Evaluate the win conditions to check for a winner
-	call CheckWinConditions
-	cmp eax, 1  ; check if a winner was found
-	jne ContinueGame  ; if no winner, continue the game
+		; Prompt the user to press a key to continue
+		mov edx, OFFSET promptMsg
+		call WriteString
 
-	; If a winner is found, distribute the pot to the winning player
-	call DistributePot
+		; Wait for user input to proceed
+		call ReadChar
 
-	; Display the game over message
-	mov edx, OFFSET gameOverMsg
-	call WriteString
-	call Crlf
+		; Evaluate the win conditions to check for a winner
+		call CheckWinConditions
+		cmp eax, 1  ; check if a winner was found
+		jne ContinueGame  ; if no winner, continue the game
+
+		; If a winner is found, distribute the pot to the winning player
+		call DistributePot
+
+		; Display the game over message
+		mov edx, OFFSET gameOverMsg
+		call WriteString
+		call Crlf
 
 	exit
 main ENDP
