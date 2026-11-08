@@ -133,11 +133,20 @@ ScratchLoop:
 	cmp scratchCount, 4
 	jae ScratchesReady
 
-	; Roll 2 to 12 without triggering the UI dice rolls
-	mov eax, 11 ; 0 to 10
-	call RandomRange ; EAX = 0 to 10
-	mov esi, eax
-	
+	; Roll two dice without displaying setup rolls
+	mov eax, 6
+	call RandomRange
+	inc eax
+	push eax
+
+	mov eax, 6
+	call RandomRange
+	inc eax
+	pop edx
+	add eax, edx
+	sub eax, 2
+	mov esi, eax	
+
 	cmp scratchedFlags[esi], 1
 	je ScratchLoop
 
