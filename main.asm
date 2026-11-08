@@ -297,10 +297,19 @@ NextChar:
 	jmp DrawTrackLoop
 
 FinishTrackLine:
-	mov edx, OFFSET closeBracket
-	call WriteString
-	jmp NextHorseLine
+    ; Show the horse at the finish line
+    mov eax, horsePositions[esi * 4]
+    cmp eax, trackLengths[esi * 4]
+    jl CloseTrack
 
+    mov edx, OFFSET horseCharacter
+    call WriteString
+
+CloseTrack:
+    mov edx, OFFSET closeBracket
+    call WriteString
+    jmp NextHorseLine
+	
 PrintScratchedLine:
 	mov edx, OFFSET scratchedMsg
 	call WriteString
