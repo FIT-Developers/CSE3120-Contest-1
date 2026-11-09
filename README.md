@@ -3,11 +3,15 @@
 ## Project Overview
 This is a 32-bit x86 Assembly implementation of the traditional wooden horse race gambling game **"Across the Board"**, built for CSE3120 Contest 1. 
 
-The game supports a single-player experience against 3 simulated AI opponents, featuring:
-- Dice rolling and card dealing
-- Horse movement and position tracking
-- Scratch horse penalties and dynamic chip pot management
-- An ASCII console board interface using the Irvine32 library
+
+The current version is an interactive single-player
+horse-racing simulation featuring:
+- Two-dice rolls and four uniquely scratched horses
+- Horse movement along ASCII console tracks
+- A winner announcement when a horse finishes
+- A fixed 20-chip demonstration pot, divided equally among four simulated player balances
+- Keypress-controlled turns and a game-over screen
+
 
 ## Team Members
 - **Michael Woodyard**
