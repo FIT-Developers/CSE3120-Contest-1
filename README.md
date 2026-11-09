@@ -24,15 +24,14 @@ horse-racing simulation featuring:
 
 ## How to Compile and Run
 
-### Option 1: Visual Studio 2022
-1. Open Visual Studio 2022 and load the project solution (`.sln`).
-2. Ensure **MASM Build Customizations** (`masm.targets`) are enabled for the project.
-3. Confirm that the **Irvine32** library and include paths are correctly linked in your project properties:
-   - *Include Directories:* `C:\Irvine`
-   - *Library Directories:* `C:\Irvine`
-   - *Additional Dependencies:* `Irvine32.lib`
-4. Build the solution (**Ctrl + Shift + B** or **Build > Build Solution**).
-5. Run the program (**F5** or **Ctrl + F5**).
+
+### Option 1: Automated build (recommended)
+1. Install Visual Studio with MASM and Irvine32 at `C:\Irvine`.
+2. Open the **x86 Native Tools Command Prompt for VS 2026**.
+3. Navigate to the repository folder using `cd /d`.
+4. Run `build.bat` to assemble and link the game.
+5. Run `main.exe` to start playing.
+
 
 ### Option 2: Quick CLI Build (Developer PowerShell / Command Prompt)
 Navigate to the project root directory containing `main.asm` and run:
