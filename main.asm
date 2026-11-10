@@ -528,7 +528,7 @@ GetPlayerBet PROC
 		; Check if selected horse is scratched
 		cmp scratchedFlags[esi], 1
 		je InvalidHorse
-		jmp PromptBet Amount
+		jmp PromptBetAmount
 
 	; Invalid horse selection handling
 	InvalidHorse:
@@ -542,11 +542,30 @@ GetPlayerBet PROC
 
 	; Prompt the player to enter their bet amount
 	PromptBetAmount:
-		
+		; Prompt the player for a bet amount
+		mov edx, OFFSET promptBetMsg
+		call WriteString
+		mov eax, playerChips[0] ; Player 1 chips
+		call WriteDec
+		mov edx, OFFSET colonMsg
+		call WriteString
+		call ReadDec
+		mov playerBet, eax
+
+		; Validate bet against the available chips
+		cmp eax, 1
+		jb InvalidBetAmount
+		cmp eax, playerChips[0]
+		ja InvalidBetAmount
+
+		; Deduct the bet from player balance and add it to the pot
+		sub playerChips[0], eax
+		add potTotal, eax
+		ret
 
 	; Invalid bet amount handling
 	InvalidBetAmount:
-
+	
 
 
 
