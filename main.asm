@@ -247,11 +247,20 @@ DrawBoard PROC
 	call Crlf
 	call Crlf
 
-	; Display the current dice roll summary
+	; Display the current dice roll and pot total
 	mov edx, OFFSET totalMsg
 	call WriteString
 	mov eax, diceTotal
 	call WriteDec
+	call Crlf
+
+	; Display the current pot total
+	mov edx, OFFSET payoutMsg
+	call WriteString
+	mov eax, potTotal
+	call WriteDec
+	mov edx, OFFSET chipsMsg
+	call WriteString
 	call Crlf
 	call Crlf
 
