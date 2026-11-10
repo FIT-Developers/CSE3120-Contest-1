@@ -53,30 +53,30 @@ Beep PROTO dwFreq:DWORD, dwType:DWORD
 	; Winning horse tracking variable
 	winningHorse DWORD ?
 
-	; 3D ASCII art for the game header
-	banner1 BYTE "  ___   _   _  ____  ____  ____  ____  ____  ____  ____  ____  ____ ", 0Dh, 0Ah, 0
-	banner2 BYTE " / __) / \\ ( \\/ ___)(  _ \\(  _ \\(  _ \\(  _ \\(  _ \\(  _ \\(  _ \\(  _ \\", 0Dh, 0Ah, 0
-	banner3 BYTE "( (_ \\/ _ \\ )  (   )   / )   / )   / )   / )   / )   / )   / )   /", 0Dh, 0Ah, 0
-	banner4 BYTE " \\___/\\_/\\_/(\\____)(_)\\_)(_)\\_)(_)\\_)(_)\\_)(_)\\_)(_)\\_)(_)\\_)(_)\\_)", 0Dh, 0Ah, 0
-	horseArt1 BYTE "   (\\_/)   ", 0
-	horseArt2 BYTE "   (o o)   ", 0
-	horseArt3 BYTE "   ( 0 )   ", 0
+	
+	; 3D ASCII banner
+	largeBanner BYTE "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=", 0Dh, 0Ah
+				BYTE "                                                                                                                                                       ",   0Dh, 0Ah
+				BYTE "     $$$$$$\                                                       $$$$$$$$\ $$\                       $$$$$$$\                                      $$\",    0Dh, 0Ah
+				BYTE "    $$  __$$\                                                      \__$$  __|$$ |                      $$  __$$\                                     $$ |",   0Dh, 0Ah
+				BYTE "    $$ /  $$ | $$$$$$$\  $$$$$$\   $$$$$$\   $$$$$$$\  $$$$$$$\       $$ |   $$$$$$$\   $$$$$$\        $$ |  $$ | $$$$$$\   $$$$$$\   $$$$$$\   $$$$$$$ |",   0Dh, 0Ah
+				BYTE "    $$$$$$$$ |$$  _____|$$  __$$\ $$  __$$\ $$  _____|$$  _____|      $$ |   $$  __$$\ $$  __$$\       $$$$$$$\ |$$  __$$\  \____$$\ $$  __$$\ $$  __$$ |",   0Dh, 0Ah
+				BYTE "    $$  __$$ |$$ /      $$ |  \__|$$ /  $$ |\$$$$$$\  \$$$$$$\        $$ |   $$ |  $$ |$$$$$$$$ |      $$  __$$\ $$ /  $$ | $$$$$$$ |$$ |  \__|$$ /  $$ |",   0Dh, 0Ah
+				BYTE "    $$ |  $$ |$$ |      $$ |      $$ |  $$ | \____$$\  \____$$\       $$ |   $$ |  $$ |$$   ____|      $$ |  $$ |$$ |  $$ |$$  __$$ |$$ |      $$ |  $$ |",   0Dh, 0Ah
+				BYTE "    $$ |  $$ |\$$$$$$$\ $$ |      \$$$$$$  |$$$$$$$  |$$$$$$$  |      $$ |   $$ |  $$ |\$$$$$$$\       $$$$$$$  |\$$$$$$  |\$$$$$$$ |$$ |      \$$$$$$$ |",   0Dh, 0Ah
+				BYTE "    \__|  \__| \_______|\__|       \______/ \_______/ \_______/       \__|   \__|  \__| \_______|      \_______/  \______/  \_______|\__|       \_______|",   0Dh, 0Ah
+				BYTE "                                                                                                                                                       ",   0Dh, 0Ah
+				BYTE "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=", 0Dh, 0Ah, 0
 
-	; Horse race banner message: --- ACROSS THE BOARD ---
-	bannerLine1 BYTE "                                $$$$$$\   $$$$$$\  $$$$$$$\   $$$$$$\   $$$$$$\   $$$$$$\        $$$$$$$$\ $$\   $$\ $$$$$$$$\       $$$$$$$\   $$$$$$\   $$$$$$\  $$$$$$$\  $$$$$$$\                                ", 0Dh, 0Ah, 0
-	bannerLine2 BYTE "                               $$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\       \__$$  __|$$ |  $$ |$$  _____|      $$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\                               ", 0Dh, 0Ah, 0
-	bannerLine3 BYTE "                               $$ /  $$ |$$ /  \__|$$ |  $$ |$$ /  $$ |$$ /  \__|$$ /  \__|         $$ |   $$ |  $$ |$$ |            $$ |  $$ |$$ /  $$ |$$ /  $$ |$$ |  $$ |$$ |  $$ |                              ", 0Dh, 0Ah, 0
-	bannerLine4 BYTE " $$$$$$\ $$$$$$\ $$$$$$\       $$$$$$$$ |$$ |      $$$$$$$  |$$ |  $$ |\$$$$$$\  \$$$$$$\           $$ |   $$$$$$$$ |$$$$$\          $$$$$$$\ |$$ |  $$ |$$$$$$$$ |$$$$$$$  |$$ |  $$ |      $$$$$$\ $$$$$$\ $$$$$$\ ", 0Dh, 0Ah, 0
-	bannerLine5 BYTE " \______|\______|\______|      $$  __$$ |$$ |      $$  __$$< $$ |  $$ | \____$$\  \____$$\          $$ |   $$  __$$ |$$  __|         $$  __$$\ $$ |  $$ |$$  __$$ |$$  __$$< $$ |  $$ |      \______|\______|\______|", 0Dh, 0Ah, 0
-	bannerLine6 BYTE "                               $$ |  $$ |$$ |  $$\ $$ |  $$ |$$ |  $$ |$$\   $$ |$$\   $$ |         $$ |   $$ |  $$ |$$ |            $$ |  $$ |$$ |  $$ |$$ |  $$ |$$ |  $$ |$$ |  $$ |                              ", 0Dh, 0Ah, 0
-	bannerLine7 BYTE "                               $$ |  $$ |\$$$$$$  |$$ |  $$ | $$$$$$  |\$$$$$$  |\$$$$$$  |         $$ |   $$ |  $$ |$$$$$$$$\       $$$$$$$  | $$$$$$  |$$ |  $$ |$$ |  $$ |$$$$$$$  |                              ", 0Dh, 0Ah, 0
-	bannerLine8 BYTE "                               \__|  \__| \______/ \__|  \__| \______/  \______/  \______/          \__|   \__|  \__|\________|      \_______/  \______/ \__|  \__|\__|  \__|\_______/                               ", 0Dh, 0Ah, 0
+	; 3D ASCII horse art
+	horseArt BYTE "", 0Dh, 0Ah
+			 BYTE "", 0Dh, 0Ah 0
 
 	; Prompt message for user input
-	promptMsg      BYTE "Press any key to roll the dice...", 0
+	promptMsg BYTE "Press any key to roll the dice...", 0
 
 	; Message for displaying how many pegs were advanced
-	trackPegMsg    BYTE " peg(s) advanced", 0
+	trackPegMsg BYTE " peg(s) advanced", 0
 
 	; Visual Track Symbols
 	openBracket    BYTE " [", 0
@@ -94,6 +94,22 @@ Beep PROTO dwFreq:DWORD, dwType:DWORD
 ; -----------------------------------------------------------------------
 
 .code
+
+; Render the welcome banner and horse ASCII art
+DisplayWelcomeBanner PROC
+	; Set text color to green for the banner
+	mov eax, lightGreen + (black * 16)  ; light green text on black background
+	call SetTextColor
+
+	; Display each line of the banner
+	mov edx, OFFSET largeBanner
+	call WriteString
+
+	; Reset text color to default light gray / white after displaying the banner
+	mov eax, lightGray + (black * 16)  ; light gray text on black background
+	call SetTextColor
+	ret
+DisplayWelcomeBanner ENDP
 
 ; Roll two dice and return the result
 Roll2Dice PROC
@@ -262,19 +278,11 @@ CheckWinConditions ENDP
 
 ; Display ASCII game header and current horse peg positions
 DrawBoard PROC
-	; Reset the cursor position to the top-left corner of the console
+	; Clear the screen and reset the cursor position to the top-left corner of the console
+	call Clrscr
 	mov dh, 0  ; row
 	mov dl, 0  ; column
 	call Gotoxy
-
-	; Display the compact version of the game header
-	mov eax, green + (black * 16) ; green text on black background
-	call SetTextColor
-	mov edx, OFFSET compactHeaderMsg
-	call WriteString
-	mov eax, lightGray + (black * 16) ; reset text color to default
-	call SetTextColor
-	call Crlf
 
 	; Display the current dice roll and pot total
 	mov edx, OFFSET totalMsg
@@ -460,6 +468,12 @@ main PROC
 	; Clear the console screen and display the big banner & horse art
 	call Clrscr
 	call DisplayWelcomeBanner
+
+	; Pause so the user can see the banner before starting the game
+	mov edx, OFFSET promptMsg
+	call WriteString
+	call ReadChar
+	call Clrscr
 
 	GameLoop:
 		; Roll the dice and display the results
