@@ -133,6 +133,9 @@ Beep PROTO dwFreq:DWORD, dwType:DWORD
 	; Messages for displaying that the game is over
 	gameOverMsg BYTE "--- GAME OVER! Thanks for playing! ---", 0
 
+	; Play again prompt message
+	playAgainMsg BYTE "Would you like to play again? (Y/N): ", 0
+
 
 
 ; -----------------------------------------------------------------------
@@ -626,6 +629,21 @@ main PROC
 		mov edx, OFFSET gameOverMsg
 		call WriteString
 		call Crlf
+		call Crlf
+
+		; Prompt the user to play again
+		mov edx, OFFSET playAgainMsg
+		call WriteString
+		call ReadChar
+
+		; Check if the user wants to play again (Y/y)
+		cmp al, 'Y'
+		je RestartGame
+		cmp al, 'y'
+		je RestartGame
+
+		; If not, exit the program
+		exit
 
 	exit
 main ENDP
