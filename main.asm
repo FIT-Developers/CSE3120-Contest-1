@@ -34,6 +34,7 @@ Beep PROTO dwFreq:DWORD, dwType:DWORD
 	scratchedFlags BYTE 11 DUP(0)  ; 0 is active, 1 is scratched
 	scratchCount   DWORD 0  ; Number of unique scratched horses
 	scratchedMsg   BYTE " (SCRATCHED)", 0
+	scratchPenaltyMsg BYTE " -> SCRATCHED! 1 chip added to the pot!", 0Dh, 0Ah, 0
 
 	; Pot and chip variables
 	potTotal    DWORD 20  ; total amount in the pot
@@ -171,15 +172,20 @@ ProcessRoll PROC
 	inc horsePositions[esi * 4]
 	jmp Done
 
-
 	; Scratched horse handling
 	horseScratched:
+		inc potTotal
 
+		; Alert the player in yellow text
+		mov eax, yellow + (black * 16) ; yellow text on black background
+		call SetTextColor
+		mov edx, OFFSET scratchPenaltyMsg
+		call WriteString
+		mov eax, lightGray + (black * 16) ; reset text color to default
+		call SetTextColor
 
 	; Display a message indicating the horse is scratched
 	Done:
-		
-
 		ret
 ProcessRoll ENDP
 
