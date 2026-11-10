@@ -637,18 +637,35 @@ main PROC
 		call Crlf
 
 		; Prompt the user to play again
-		mov edx, OFFSET playAgainMsg
-		call WriteString
-		call ReadChar
+		PromptPlayAgain:
+			mov edx, OFFSET playAgainMsg
+			call WriteString
+			call ReadChar
 
-		; Check if the user wants to play again (Y/y)
-		cmp al, 'Y'
-		je RestartGame
-		cmp al, 'y'
-		je RestartGame
+			; Check the user input for 'Y' or 'y'
+			cmp al, 'Y'
+			je RestartGame
+			cmp al, 'y'
+			je RestartGame
 
-		; If not, exit the program
-		exit
+			; If the user input is 'N' or 'n', exit the game
+			cmp al, 'N'
+			je ExitGame
+			cmp al, 'n'
+			je ExitGame
+
+			; If the input is invalid, prompt again
+			call Crlf
+			jmp PromptPlayAgain
+
+		; Exit the game
+		ExitGame:
+			call Clrscr
+			mov edx, OFFSET gameOverMsg
+			call WriteString
+			call Crlf
+			call Crlf
+			exit
 
 	; If the user chooses to play again, reset the game state and start over
 	RestartGame:
