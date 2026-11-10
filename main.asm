@@ -510,7 +510,25 @@ DistributePot PROC
 GetPlayerBet PROC
 	; Prompt the player to select a horse to bet on
 	PromptHorse:
-		
+		mov edx, OFFSET promptHorseMsg
+		call WriteString
+		call ReadDec
+		mov selectedHorse, eax
+
+		; Validate range (2-12)
+		cmp eax, 2
+		jb InvalidHorse
+		cmp eax, 12
+		ja InvalidHorse
+
+		; Convert horse number to 0-based array index (0-10)
+		mov esi, eax
+		sub esi, 2
+
+		; Check if selected horse is scratched
+		cmp scratchedFlags[esi], 1
+		je InvalidHorse
+		jmp PromptBet Amount
 
 	; Invalid horse selection handling
 	InvalidHorse:
