@@ -645,6 +645,21 @@ main PROC
 		; If not, exit the program
 		exit
 
+	; If the user chooses to play again, reset the game state and start over
+	RestartGame:
+		; Reset game state
+		mov ecx, 11
+		mov esi, 0
+
+	; Loop to reset horse positions and scratched flags
+	ResetLoop:
+		mov horsePositions[esi * 4], 0
+		mov scratchedFlags[esi], 0
+		inc esi
+		loop ResetLoop
+
+		; Reset pot and player chips
+
 	exit
 main ENDP
 
