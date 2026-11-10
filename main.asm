@@ -532,11 +532,17 @@ GetPlayerBet PROC
 
 	; Invalid horse selection handling
 	InvalidHorse:
-
+		mov eax, red + (black * 16)
+		call SetTextColor
+		mov edx, OFFSET invalidHorseMsg
+		call WriteString
+		mov eax, lightGray + (black * 16)
+		call SetTextColor
+		jmp PromptHorse
 
 	; Prompt the player to enter their bet amount
 	PromptBetAmount:
-
+		
 
 	; Invalid bet amount handling
 	InvalidBetAmount:
