@@ -56,21 +56,57 @@ Beep PROTO dwFreq:DWORD, dwType:DWORD
 	
 	; 3D ASCII banner
 	largeBanner BYTE "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=", 0Dh, 0Ah
-				BYTE "                                                                                                                                                       ",   0Dh, 0Ah
-				BYTE "     $$$$$$\                                                       $$$$$$$$\ $$\                       $$$$$$$\                                      $$\",    0Dh, 0Ah
-				BYTE "    $$  __$$\                                                      \__$$  __|$$ |                      $$  __$$\                                     $$ |",   0Dh, 0Ah
-				BYTE "    $$ /  $$ | $$$$$$$\  $$$$$$\   $$$$$$\   $$$$$$$\  $$$$$$$\       $$ |   $$$$$$$\   $$$$$$\        $$ |  $$ | $$$$$$\   $$$$$$\   $$$$$$\   $$$$$$$ |",   0Dh, 0Ah
-				BYTE "    $$$$$$$$ |$$  _____|$$  __$$\ $$  __$$\ $$  _____|$$  _____|      $$ |   $$  __$$\ $$  __$$\       $$$$$$$\ |$$  __$$\  \____$$\ $$  __$$\ $$  __$$ |",   0Dh, 0Ah
-				BYTE "    $$  __$$ |$$ /      $$ |  \__|$$ /  $$ |\$$$$$$\  \$$$$$$\        $$ |   $$ |  $$ |$$$$$$$$ |      $$  __$$\ $$ /  $$ | $$$$$$$ |$$ |  \__|$$ /  $$ |",   0Dh, 0Ah
-				BYTE "    $$ |  $$ |$$ |      $$ |      $$ |  $$ | \____$$\  \____$$\       $$ |   $$ |  $$ |$$   ____|      $$ |  $$ |$$ |  $$ |$$  __$$ |$$ |      $$ |  $$ |",   0Dh, 0Ah
-				BYTE "    $$ |  $$ |\$$$$$$$\ $$ |      \$$$$$$  |$$$$$$$  |$$$$$$$  |      $$ |   $$ |  $$ |\$$$$$$$\       $$$$$$$  |\$$$$$$  |\$$$$$$$ |$$ |      \$$$$$$$ |",   0Dh, 0Ah
-				BYTE "    \__|  \__| \_______|\__|       \______/ \_______/ \_______/       \__|   \__|  \__| \_______|      \_______/  \______/  \_______|\__|       \_______|",   0Dh, 0Ah
-				BYTE "                                                                                                                                                       ",   0Dh, 0Ah
+				BYTE "                                                                                                                                                       ",       0Dh, 0Ah
+				BYTE "     $$$$$$\                                                       $$$$$$$$\ $$\                       $$$$$$$\                                      $$\",      0Dh, 0Ah
+				BYTE "    $$  __$$\                                                      \__$$  __|$$ |                      $$  __$$\                                     $$ |",     0Dh, 0Ah
+				BYTE "    $$ /  $$ | $$$$$$$\  $$$$$$\   $$$$$$\   $$$$$$$\  $$$$$$$\       $$ |   $$$$$$$\   $$$$$$\        $$ |  $$ | $$$$$$\   $$$$$$\   $$$$$$\   $$$$$$$ |",     0Dh, 0Ah
+				BYTE "    $$$$$$$$ |$$  _____|$$  __$$\ $$  __$$\ $$  _____|$$  _____|      $$ |   $$  __$$\ $$  __$$\       $$$$$$$\ |$$  __$$\  \____$$\ $$  __$$\ $$  __$$ |",     0Dh, 0Ah
+				BYTE "    $$  __$$ |$$ /      $$ |  \__|$$ /  $$ |\$$$$$$\  \$$$$$$\        $$ |   $$ |  $$ |$$$$$$$$ |      $$  __$$\ $$ /  $$ | $$$$$$$ |$$ |  \__|$$ /  $$ |",     0Dh, 0Ah
+				BYTE "    $$ |  $$ |$$ |      $$ |      $$ |  $$ | \____$$\  \____$$\       $$ |   $$ |  $$ |$$   ____|      $$ |  $$ |$$ |  $$ |$$  __$$ |$$ |      $$ |  $$ |",     0Dh, 0Ah
+				BYTE "    $$ |  $$ |\$$$$$$$\ $$ |      \$$$$$$  |$$$$$$$  |$$$$$$$  |      $$ |   $$ |  $$ |\$$$$$$$\       $$$$$$$  |\$$$$$$  |\$$$$$$$ |$$ |      \$$$$$$$ |",     0Dh, 0Ah
+				BYTE "    \__|  \__| \_______|\__|       \______/ \_______/ \_______/       \__|   \__|  \__| \_______|      \_______/  \______/  \_______|\__|       \_______|",     0Dh, 0Ah
+				BYTE "                                                                                                                                                       ",       0Dh, 0Ah
 				BYTE "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=", 0Dh, 0Ah, 0
 
 	; 3D ASCII horse art
-	horseArt BYTE "", 0Dh, 0Ah
-			 BYTE "", 0Dh, 0Ah 0
+	horseArt BYTE " ", 0Dh, 0Ah
+			 BYTE "                                                                                                   $                $$",                                    0Dh, 0Ah
+			 BYTE "                                                                                                   $.$             $$$",                                    0Dh, 0Ah
+			 BYTE "                                                                                                 $$$$$           $$$$",                                     0Dh, 0Ah
+			 BYTE "                                                                                                    /$$   $$$$   _.$$$$",                                   0Dh, 0Ah
+			 BYTE "                                                                                                    /$$$$ $$$$$$$$-$$$  -",                                 0Dh, 0Ah
+			 BYTE "                                                                                                      $\    $  $ -  $$",                                    0Dh, 0Ah
+			 BYTE "                                                                                                   $$   $   $$$.    $$  $$",                                0Dh, 0Ah
+			 BYTE "                                                                                                 $$$ $$$- $$       $    $$$$$$    .",                       0Dh, 0Ah
+			 BYTE "                                           $                                                   $$-$$$$$$$_        || ._    $$      $$$-",                   0Dh, 0Ah
+			 BYTE "                                          $$              $-$                               $ $$-$$$.     $$       $$      $$      $$$$$$",                 0Dh, 0Ah
+			 BYTE "                                         $$$$.$         $$$-$                            $   $$$           $        $       $$      $$$$$$$$$",             0Dh, 0Ah
+			 BYTE "                                         $$$$ |      $ $ $$ $                            $_  $                $$$$.       \$$$      $\  $$$$$$ $$",         0Dh, 0Ah
+			 BYTE "                                          $$$ $$$$$$$$ $$$$.                                                              $         $/$$$ $ $$ $$$$$$",     0Dh, 0Ah
+			 BYTE "                                       .  $$  |_$$$      $$                            $$$$ $$$$                 |      $-$|$$      $ $.$_$$$$ $$  /$",     0Dh, 0Ah
+			 BYTE "                                          $$      -$        $                          _$-\ -$$- $             $      _ / $ -$      | $ $ \$$/ -- \.$",     0Dh, 0Ah
+			 BYTE "                                    .   $$$$/$    $    $  $$  $$$ $|$                       $$    $    $.$-$       $     $$$$ .    $$      _$/$/$$$$ $$$$", 0Dh, 0Ah
+			 BYTE "                           $$$    $ $$     $           |$$$ $_$_$$                    /            / $$$       $$$ $$        $$       . $\$$$$ $$$",        0Dh, 0Ah
+			 BYTE "                       $.$_$$      $$       /       $$      $_$ $$ \                 $ $              $$$ $$$$|$             $             $$$ ",           0Dh, 0Ah
+			 BYTE "                   $$$|$.$-$      $$       $    $   $           $$$   $            /                  $$  \$$               $",                             0Dh, 0Ah
+			 BYTE "            -$$$$ $$$/ $  _$       $ $                                        $         $$/               $$$             $$",                              0Dh, 0Ah
+			 BYTE "           $$$  \ $$$$$$_$\$      $$.$\$                      __$$$$ $$$$     $        $$$$               $$$$       -  $|$$",                              0Dh, 0Ah
+			 BYTE "             $$$$ $$$$/$.$-       $      $$$$    $$         $\$    /    $_    $          $           $$$$ $$          $ $\$$$",                             0Dh, 0Ah
+			 BYTE "              $$$ $$$$$$.|      -$$        $$ $/$   $   .$$ $        $   |     $$            $$/                        $$$$$",                             0Dh, 0Ah
+			 BYTE "               $$ $$$             $             $$$$$$ $$$              $ $        -     $    $                         $$$$$",                             0Dh, 0Ah
+			 BYTE "                                   $               $$    $                              $$$ $                             $$$",                             0Dh, 0Ah
+			 BYTE "                                   |               $$\   $                                                                 _/",                             0Dh, 0Ah
+			 BYTE "                                   $$              $$$ $$                $     $                                           $$$",                            0Dh, 0Ah
+			 BYTE "                                    $$             $$$            $  $$$         $                                          $$",                            0Dh, 0Ah
+			 BYTE "                                  $ $$$$.          $$$            $  $$$$        $                                           $$/",                          0Dh, 0Ah
+			 BYTE "                                   $$$$$ $$$.     _$$$ $$$$          $$ .        $",                                                                        0Dh, 0Ah
+			 BYTE "                                  $$$$$                        $ $             $",                                                                          0Dh, 0Ah
+			 BYTE "                                   $$$$$                         $            \",                                                                           0Dh, 0Ah
+			 BYTE "                                   $$$                             $ $$$",                                                                                  0Dh, 0Ah
+			 BYTE "                                   $$",                                                                                                                     0Dh, 0Ah
+			 BYTE "                                  $$",                                                                                                                      0Dh, 0Ah
+			 BYTE " ", 0Dh, 0Ah
+			 BYTE "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=", 0Dh, 0Ah, 0
 
 	; Prompt message for user input
 	promptMsg BYTE "Press any key to roll the dice...", 0
@@ -96,20 +132,24 @@ Beep PROTO dwFreq:DWORD, dwType:DWORD
 .code
 
 ; Render the welcome banner and horse ASCII art
-DisplayWelcomeBanner PROC
+DisplayASCIIArt PROC
 	; Set text color to green for the banner
 	mov eax, lightGreen + (black * 16)  ; light green text on black background
 	call SetTextColor
 
-	; Display each line of the banner
+	; Display the banner
 	mov edx, OFFSET largeBanner
+	call WriteString
+
+	; Display the horse ASCII art
+	mov edx, OFFSET horseArt
 	call WriteString
 
 	; Reset text color to default light gray / white after displaying the banner
 	mov eax, lightGray + (black * 16)  ; light gray text on black background
 	call SetTextColor
 	ret
-DisplayWelcomeBanner ENDP
+DisplayASCIIArt ENDP
 
 ; Roll two dice and return the result
 Roll2Dice PROC
@@ -364,18 +404,18 @@ NextChar:
 	jmp DrawTrackLoop
 
 FinishTrackLine:
-    ; Show the horse at the finish line
-    mov eax, horsePositions[esi * 4]
-    cmp eax, trackLengths[esi * 4]
-    jl CloseTrack
+	; Show the horse at the finish line
+	mov eax, horsePositions[esi * 4]
+	cmp eax, trackLengths[esi * 4]
+	jl CloseTrack
 
-    mov edx, OFFSET horseCharacter
-    call WriteString
+	mov edx, OFFSET horseCharacter
+	call WriteString
 
 CloseTrack:
-    mov edx, OFFSET closeBracket
-    call WriteString
-    jmp NextHorseLine
+	mov edx, OFFSET closeBracket
+	call WriteString
+	jmp NextHorseLine
 	
 PrintScratchedLine:
 	mov edx, OFFSET scratchedMsg
@@ -467,7 +507,7 @@ main PROC
 
 	; Clear the console screen and display the big banner & horse art
 	call Clrscr
-	call DisplayWelcomeBanner
+	call DisplayASCIIArt
 
 	; Pause so the user can see the banner before starting the game
 	mov edx, OFFSET promptMsg
