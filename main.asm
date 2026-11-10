@@ -29,30 +29,53 @@ Beep PROTO dwFreq:DWORD, dwType:DWORD
 	colonMsg BYTE ": ", 0
 
 	; Board state and track variables
-	horsePositions DWORD 11 DUP(0)  ; array to hold the positions of 11 horses on the track
-	trackLengths   DWORD 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3  ; lengths of each horse's track segment
-	scratchedFlags BYTE 11 DUP(0)  ; 0 is active, 1 is scratched
-	scratchCount   DWORD 0  ; Number of unique scratched horses
-	scratchedMsg   BYTE " (SCRATCHED)", 0
+	horsePositions    DWORD 11 DUP(0)  ; array to hold the positions of 11 horses on the track
+	trackLengths      DWORD 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3  ; lengths of each horse's track segment
+	scratchedFlags    BYTE 11 DUP(0)  ; 0 is active, 1 is scratched
+	scratchCount      DWORD 0  ; Number of unique scratched horses
+	scratchedMsg      BYTE " (SCRATCHED)", 0
 	scratchPenaltyMsg BYTE " -> SCRATCHED! 1 chip added to the pot!", 0Dh, 0Ah, 0
 
 	; Pot and chip variables
-	potTotal    DWORD 20  ; total amount in the pot
-	playerChips DWORD 20, 20, 20, 20  ; each player's available chips
+	potTotal     DWORD 20  ; total amount in the pot
+	playerChips  DWORD 20, 20, 20, 20  ; each player's available chips
+	potHeaderMsg BYTE "Current pot: ", 0
+
+	; Scratched horse penalty tracking
+	wasScratchedRolled BYTE 0  ; 0 = no, 1 = yes
 
 	; Pot and payout messages
-	payoutMsg BYTE "Winner! Payout: ", 0
-	chipsMsg  BYTE " chips.", 0
+	payoutMsg      BYTE "Winner! Payout: ", 0
+	chipsMsg       BYTE " chips.", 0
 	horseWinnerMsg BYTE "Horse #", 0
-	wonMsg BYTE " has won the race!", 0Dh, 0Ah, 0
+	wonMsg         BYTE " has won the race!", 0Dh, 0Ah, 0
 
 	; Winning horse tracking variable
 	winningHorse DWORD ?
 
-	; UI Display Strings
-	boardHeaderMsg BYTE "=== ACROSS THE BOARD: HORSE RACE ===", 0Dh, 0Ah
-				   BYTE "------------------------------------", 0
+	; 3D ASCII art for the game header
+	banner1 BYTE "  ___   _   _  ____  ____  ____  ____  ____  ____  ____  ____  ____ ", 0Dh, 0Ah, 0
+	banner2 BYTE " / __) / \\ ( \\/ ___)(  _ \\(  _ \\(  _ \\(  _ \\(  _ \\(  _ \\(  _ \\(  _ \\", 0Dh, 0Ah, 0
+	banner3 BYTE "( (_ \\/ _ \\ )  (   )   / )   / )   / )   / )   / )   / )   / )   /", 0Dh, 0Ah, 0
+	banner4 BYTE " \\___/\\_/\\_/(\\____)(_)\\_)(_)\\_)(_)\\_)(_)\\_)(_)\\_)(_)\\_)(_)\\_)(_)\\_)", 0Dh, 0Ah, 0
+	horseArt1 BYTE "   (\\_/)   ", 0
+	horseArt2 BYTE "   (o o)   ", 0
+	horseArt3 BYTE "   ( 0 )   ", 0
+
+	; Horse race banner message: --- ACROSS THE BOARD ---
+	bannerLine1 BYTE "                                $$$$$$\   $$$$$$\  $$$$$$$\   $$$$$$\   $$$$$$\   $$$$$$\        $$$$$$$$\ $$\   $$\ $$$$$$$$\       $$$$$$$\   $$$$$$\   $$$$$$\  $$$$$$$\  $$$$$$$\                                ", 0Dh, 0Ah, 0
+	bannerLine2 BYTE "                               $$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\       \__$$  __|$$ |  $$ |$$  _____|      $$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\                               ", 0Dh, 0Ah, 0
+	bannerLine3 BYTE "                               $$ /  $$ |$$ /  \__|$$ |  $$ |$$ /  $$ |$$ /  \__|$$ /  \__|         $$ |   $$ |  $$ |$$ |            $$ |  $$ |$$ /  $$ |$$ /  $$ |$$ |  $$ |$$ |  $$ |                              ", 0Dh, 0Ah, 0
+	bannerLine4 BYTE " $$$$$$\ $$$$$$\ $$$$$$\       $$$$$$$$ |$$ |      $$$$$$$  |$$ |  $$ |\$$$$$$\  \$$$$$$\           $$ |   $$$$$$$$ |$$$$$\          $$$$$$$\ |$$ |  $$ |$$$$$$$$ |$$$$$$$  |$$ |  $$ |      $$$$$$\ $$$$$$\ $$$$$$\ ", 0Dh, 0Ah, 0
+	bannerLine5 BYTE " \______|\______|\______|      $$  __$$ |$$ |      $$  __$$< $$ |  $$ | \____$$\  \____$$\          $$ |   $$  __$$ |$$  __|         $$  __$$\ $$ |  $$ |$$  __$$ |$$  __$$< $$ |  $$ |      \______|\______|\______|", 0Dh, 0Ah, 0
+	bannerLine6 BYTE "                               $$ |  $$ |$$ |  $$\ $$ |  $$ |$$ |  $$ |$$\   $$ |$$\   $$ |         $$ |   $$ |  $$ |$$ |            $$ |  $$ |$$ |  $$ |$$ |  $$ |$$ |  $$ |$$ |  $$ |                              ", 0Dh, 0Ah, 0
+	bannerLine7 BYTE "                               $$ |  $$ |\$$$$$$  |$$ |  $$ | $$$$$$  |\$$$$$$  |\$$$$$$  |         $$ |   $$ |  $$ |$$$$$$$$\       $$$$$$$  | $$$$$$  |$$ |  $$ |$$ |  $$ |$$$$$$$  |                              ", 0Dh, 0Ah, 0
+	bannerLine8 BYTE "                               \__|  \__| \______/ \__|  \__| \______/  \______/  \______/          \__|   \__|  \__|\________|      \_______/  \______/ \__|  \__|\__|  \__|\_______/                               ", 0Dh, 0Ah, 0
+
+	; Prompt message for user input
 	promptMsg      BYTE "Press any key to roll the dice...", 0
+
+	; Message for displaying how many pegs were advanced
 	trackPegMsg    BYTE " peg(s) advanced", 0
 
 	; Visual Track Symbols
@@ -160,6 +183,8 @@ InitScratches ENDP
 
 ; Process the roll and update the board state
 ProcessRoll PROC
+	mov wasScratchedRolled, 0 ; reset the scratched horse flag for this roll
+
 	; Convert the dice total to a horse index (0-10)
 	mov esi, diceTotal
 	sub esi, 2  ; adjusts for the zero-based index (dice total ranges from 2 to 12)
@@ -175,6 +200,7 @@ ProcessRoll PROC
 	; Scratched horse handling
 	horseScratched:
 		inc potTotal
+		mov wasScratchedRolled, 1 ; set the flag to indicate a scratched horse was rolled
 
 		; Alert the player in yellow text
 		mov eax, yellow + (black * 16) ; yellow text on black background
@@ -188,7 +214,6 @@ ProcessRoll PROC
 	Done:
 		ret
 ProcessRoll ENDP
-
 
 ; Check if any active horse has reached or exceeded its finish line
 ; Returns 1 in EAX if a horse has won, otherwise returns 0
@@ -235,16 +260,20 @@ CheckWinConditions PROC
 
 CheckWinConditions ENDP
 
-
 ; Display ASCII game header and current horse peg positions
 DrawBoard PROC
-	; Clears the console screen
-	call Clrscr
+	; Reset the cursor position to the top-left corner of the console
+	mov dh, 0  ; row
+	mov dl, 0  ; column
+	call Gotoxy
 
-	; Display the game header
-	mov edx, OFFSET boardHeaderMsg
+	; Display the compact version of the game header
+	mov eax, green + (black * 16) ; green text on black background
+	call SetTextColor
+	mov edx, OFFSET compactHeaderMsg
 	call WriteString
-	call Crlf
+	mov eax, lightGray + (black * 16) ; reset text color to default
+	call SetTextColor
 	call Crlf
 
 	; Display the current dice roll and pot total
@@ -255,7 +284,7 @@ DrawBoard PROC
 	call Crlf
 
 	; Display the current pot total
-	mov edx, OFFSET payoutMsg
+	mov edx, OFFSET potHeaderMsg
 	call WriteString
 	mov eax, potTotal
 	call WriteDec
@@ -263,6 +292,21 @@ DrawBoard PROC
 	call WriteString
 	call Crlf
 	call Crlf
+
+	; Check if a scratched horse was rolled and display a message if so
+	cmp wasScratchedRolled, 1
+	jne SkipScratchMessage
+
+	; Display the scratched horse penalty message in yellow text
+	mov eax, yellow + (black * 16) ; yellow text on black background
+	call SetTextColor
+	mov edx, OFFSET scratchPenaltyMsg
+	call WriteString
+	mov eax, lightGray + (black * 16) ; reset text color to default
+	call SetTextColor
+
+	SkipScratchMessage:
+		call Crlf
 
 	; Initialize the horse index (0 to 10)
 	mov esi, 0
@@ -405,15 +449,17 @@ DistributePot PROC
 
 	DistributePot ENDP
 
-
 ; Game setup and main loop calling Roll2Dice and ProcessRoll
 main PROC
-
 	; Seed the random number generator
 	call Randomize
 
 	; Initialize the scratched horses before starting the game
 	call InitScratches
+
+	; Clear the console screen and display the big banner & horse art
+	call Clrscr
+	call DisplayWelcomeBanner
 
 	GameLoop:
 		; Roll the dice and display the results
