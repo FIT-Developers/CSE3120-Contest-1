@@ -58,7 +58,7 @@ Beep PROTO dwFreq:DWORD, dwType:DWORD
 	playerBet     DWORD ? ; amount of chips bet by the player
 
 	promptHorseMsg  BYTE "Select a horse to bet on (2-12): ", 0
-	promptBetMsg    BYTE "Enter your bet amount (Chips available: ", 0
+	promptBetMsg    BYTE "Enter your bet amount. Chips available: ", 0
 	invalidHorseMsg BYTE "Invalid horse selection! Horse is scratched or out of range.", 0Dh, 0Ah, 0
 	invalidBetMsg   BYTE "Invalid bet amount! You don't have enough chips.", 0Dh, 0Ah, 0
 
@@ -115,7 +115,8 @@ Beep PROTO dwFreq:DWORD, dwType:DWORD
 			 BYTE "                                   $$",                                                                                                                     0Dh, 0Ah
 			 BYTE "                                  $$",                                                                                                                      0Dh, 0Ah
 			 BYTE " ", 0Dh, 0Ah
-			 BYTE "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=", 0Dh, 0Ah, 0
+			 BYTE "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=",
+			 BYTE " ", 0Dh, 0Ah, 0
 
 	; Prompt message for user input
 	promptMsg BYTE "Press any key to roll the dice...", 0
@@ -591,6 +592,10 @@ main PROC
 	mov edx, OFFSET promptMsg
 	call WriteString
 	call ReadChar
+	call Clrscr
+
+	; Prompt the player to place their bet before starting the game loop
+	call GetPlayerBet
 	call Clrscr
 
 	GameLoop:
