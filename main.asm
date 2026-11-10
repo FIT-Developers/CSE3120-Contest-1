@@ -565,9 +565,13 @@ GetPlayerBet PROC
 
 	; Invalid bet amount handling
 	InvalidBetAmount:
-	
-
-
+		mov eax, red + (black * 16)
+		call SetTextColor
+		mov edx, OFFSET invalidBetMsg
+		call WriteString
+		mov eax, lightGray + (black * 16)
+		call SetTextColor
+		jmp PromptBetAmount
 
 GetPlayerBet ENDP
 
