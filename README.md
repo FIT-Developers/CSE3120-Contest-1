@@ -4,12 +4,12 @@
 **"Across the Board"** is a 32-bit x86 Assembly console simulation of the classic wooden horse-racing tabletop game. 
 
 ### Core Gameplay Mechanics:
-- **Pre-Race Setup & Scratch Phase:** At the start of each round, 4 horses (numbered 2–12) are randomly selected as **Scratched** and removed from the race. 
+- **Pre-Race Setup & Scratch Phase:** At the start of each round, 4 horses (numbered 2-12) are randomly selected as **Scratched** and removed from the race. 
 - **Interactive Player Betting:** Before the race begins, the player reviews the racetrack grid and places a chip bet on any active (non-scratched) horse from their balance.
 - **Racetrack & Peg Movement:** The race proceeds by rolling two 6-sided dice.
   - **Active Horse:** If an active horse's number is rolled, its peg advances 1 spot along its designated track. Track lengths vary based on rolling probability (e.g., Horse #7 has a longer track than #2 or #12).
-  - **Scratched Horse Penalty:** If a scratched horse's number is rolled, its peg does not move; instead, 1 penalty chip is automatically added to the main pot.
-- **Victory & Pot Distribution:** The first active horse to reach its finish line wins the race. The accumulated pot (starting ante + scratch penalty chips + bets) is distributed to the winner. Players are then prompted with a replay option to restart another round with refreshed state.
+  - **Scratched Horse Penalty:** If a scratched horse's number is rolled, its peg does not move. Instead, 1 penalty chip is automatically added to the main pot.
+- **Victory & Pot Distribution:** The first active horse to reach its finish line wins the race. The winner receives the accumulated pot. Players are then prompted to replay and restart another round with a refreshed state.
 
 ---
 
