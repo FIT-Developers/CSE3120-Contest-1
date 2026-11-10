@@ -9,6 +9,9 @@ INCLUDE Irvine32.inc
 
 
 ; Win32 API for console audio
+; Disclosure:
+;		We learned how to use Win32 API prototyping (Beep PROTO) and INVOKE to play sound effects
+;		by looking up the Microsoft Win32 API documentation for Kernel32 Beep parameters (frequency/duration) and MASM prototype syntax.
 Beep PROTO dwFreq:DWORD, dwType:DWORD
 
 
