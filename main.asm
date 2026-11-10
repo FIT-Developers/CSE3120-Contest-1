@@ -115,11 +115,11 @@ Beep PROTO dwFreq:DWORD, dwType:DWORD
 			 BYTE "                                   $$",                                                                                                                     0Dh, 0Ah
 			 BYTE "                                  $$",                                                                                                                      0Dh, 0Ah
 			 BYTE " ", 0Dh, 0Ah
-			 BYTE "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=",
+			 BYTE "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=", 0Dh, 0Ah
 			 BYTE " ", 0Dh, 0Ah, 0
 
 	; Prompt message for user input
-	promptMsg BYTE "Press any key to roll the dice...", 0
+	promptMsg BYTE "Press any key to continue...", 0
 
 	; Message for displaying how many pegs were advanced
 	trackPegMsg BYTE " peg(s) advanced", 0
@@ -450,8 +450,10 @@ DistributePot PROC
 	; Print a new line after the last prompted keypress
 	call Crlf
 
-	; Play a beep at 750 hertz for 400 ms
-	INVOKE Beep, 750, 400
+	; Play a short victory tune using the Beep function
+	INVOKE Beep, 523, 150 ; C5
+	INVOKE Beep, 659, 150 ; E5
+	INVOKE Beep, 784, 300 ; G5
 
 	; Pause for 300ms
 	mov eax, 300
@@ -512,6 +514,9 @@ DistributePot PROC
 
 ; Get the player's bet
 GetPlayerBet PROC
+	; Draw the initial board state before prompting for a bet
+	call DrawBoard
+
 	; Prompt the player to select a horse to bet on
 	PromptHorse:
 		mov edx, OFFSET promptHorseMsg
@@ -659,6 +664,12 @@ main PROC
 		loop ResetLoop
 
 		; Reset pot and player chips
+		mov scratchCount, 0
+		call InitScratches
+		call Clrscr
+		call GetPlayerBet
+		call Clrscr
+		jmp GameLoop
 
 	exit
 main ENDP
